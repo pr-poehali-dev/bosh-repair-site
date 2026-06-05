@@ -5,7 +5,7 @@ const SEND_APPLICATION_URL = "https://functions.poehali.dev/8e2e01ab-452f-4967-a
 
 type IconName = string;
 
-const HERO_IMAGE = "https://cdn.poehali.dev/projects/8b21b88d-9626-449b-a265-a3555a90f6f9/files/6530d996-5229-4d55-8d0b-609b7f3e695f.jpg";
+const HERO_IMAGE = "https://cdn.poehali.dev/projects/8b21b88d-9626-449b-a265-a3555a90f6f9/files/193dad46-35ff-41b1-ac35-e939c97b347c.jpg";
 const APPLIANCES_IMAGE = "https://cdn.poehali.dev/projects/8b21b88d-9626-449b-a265-a3555a90f6f9/files/b9da38d5-a9dd-4980-afb2-5c048c7b06a5.jpg";
 
 const NAV_LINKS = [
