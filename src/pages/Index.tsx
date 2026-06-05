@@ -570,6 +570,7 @@ export default function Index() {
           <p className="text-white/30 text-sm">© 2012 Bosch Service. Все права защищены.</p>
           <div className="flex gap-4 text-white/40 text-sm">
             <a href="#" className="hover:text-white/70 transition-colors">Политика конфиденциальности</a>
+            <span>Не является публичной офертой</span>
           </div>
         </div>
       </footer>
