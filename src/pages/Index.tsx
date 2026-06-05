@@ -92,9 +92,9 @@ export default function Index() {
               <Icon name="Clock" size={14} />
               Пн–Вс: 8:00 – 22:00
             </span>
-            <a href="tel:+74951234567" className="flex items-center gap-1.5 text-white font-semibold hover:text-red-400 transition-colors">
+            <a href="tel:+79307879192" className="flex items-center gap-1.5 text-white font-semibold hover:text-red-400 transition-colors">
               <Icon name="Phone" size={14} />
-              +7 (495) 123-45-67
+              +7 930 787 91 92
             </a>
           </div>
         </div>
@@ -122,7 +122,7 @@ export default function Index() {
             ))}
           </nav>
 
-          <a href="tel:+74951234567"
+          <a href="tel:+79307879192"
             className="hidden md:flex items-center gap-2 px-5 py-2.5 rounded font-semibold text-sm text-white transition-colors"
             style={{ backgroundColor: "var(--brand-red)" }}
             onMouseEnter={e => (e.currentTarget.style.backgroundColor = "var(--brand-red-hover)")}
@@ -150,10 +150,10 @@ export default function Index() {
                   {link.label}
                 </a>
               ))}
-              <a href="tel:+74951234567" className="mt-2 flex items-center justify-center gap-2 py-3 rounded font-semibold text-white"
+              <a href="tel:+79307879192" className="mt-2 flex items-center justify-center gap-2 py-3 rounded font-semibold text-white"
                 style={{ backgroundColor: "var(--brand-red)" }}>
                 <Icon name="Phone" size={16} />
-                +7 (495) 123-45-67
+                +7 930 787 91 92
               </a>
             </div>
           </div>
@@ -416,7 +416,7 @@ export default function Index() {
 
           <div className="grid md:grid-cols-3 gap-8 mb-14">
             {[
-              { icon: "Phone", title: "Телефон", lines: ["+7 (495) 123-45-67", "+7 (985) 123-45-67"] },
+              { icon: "Phone", title: "Телефон", lines: ["+7 930 787 91 92", "+7 930 787 91 92"] },
               { icon: "Clock", title: "Режим работы", lines: ["Пн–Вс: 8:00 – 22:00", "Без выходных и праздников"] },
               { icon: "MapPin", title: "Зона обслуживания", lines: ["Москва и Московская", "область (до 30 км от МКАД)"] },
             ].map(contact => (
