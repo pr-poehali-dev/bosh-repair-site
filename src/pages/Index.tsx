@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Icon from "@/components/ui/icon";
 
+const SEND_APPLICATION_URL = "https://functions.poehali.dev/8e2e01ab-452f-4967-ae24-2dbd637b802f";
+
 type IconName = string;
 
 const HERO_IMAGE = "https://cdn.poehali.dev/projects/8b21b88d-9626-449b-a265-a3555a90f6f9/files/6530d996-5229-4d55-8d0b-609b7f3e695f.jpg";
@@ -75,6 +77,113 @@ const FAQ = [
     a: "Да, ремонтируем технику Bosch начиная с 1995 года выпуска. Наши мастера имеют опыт работы со всей линейкой оборудования."
   },
 ];
+
+function ContactForm() {
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [equipment, setEquipment] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async () => {
+    if (!name.trim() || !phone.trim()) {
+      setError("Пожалуйста, укажите имя и телефон");
+      return;
+    }
+    setError("");
+    setLoading(true);
+    try {
+      const res = await fetch(SEND_APPLICATION_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, phone, equipment }),
+      });
+      if (res.ok) {
+        setSent(true);
+        setName("");
+        setPhone("");
+        setEquipment("");
+      } else {
+        setError("Ошибка отправки. Попробуйте ещё раз.");
+      }
+    } catch {
+      setError("Ошибка сети. Попробуйте ещё раз.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="max-w-xl mx-auto rounded-2xl p-8 md:p-10" style={{ backgroundColor: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
+      <h3 className="font-heading text-2xl font-semibold text-white text-center mb-2">Оставить заявку</h3>
+      <p className="text-white/50 text-center text-sm mb-8">Мастер перезвонит в течение 15 минут</p>
+
+      {sent ? (
+        <div className="text-center py-8">
+          <div className="text-4xl mb-4">✅</div>
+          <p className="text-white text-lg font-semibold mb-2">Заявка отправлена!</p>
+          <p className="text-white/50 text-sm">Мастер свяжется с вами в ближайшее время.</p>
+          <button className="mt-6 text-white/50 text-sm underline cursor-pointer" onClick={() => setSent(false)}>Отправить ещё одну</button>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          <div>
+            <label className="block text-white/70 text-sm mb-2 font-medium">Ваше имя</label>
+            <input
+              type="text"
+              placeholder="Иван Иванов"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              className="w-full rounded-lg px-4 py-3 text-white placeholder-white/30 outline-none transition-all"
+              style={{ backgroundColor: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)" }}
+            />
+          </div>
+          <div>
+            <label className="block text-white/70 text-sm mb-2 font-medium">Телефон</label>
+            <input
+              type="tel"
+              placeholder="+7 (___) ___-__-__"
+              value={phone}
+              onChange={e => setPhone(e.target.value)}
+              className="w-full rounded-lg px-4 py-3 text-white placeholder-white/30 outline-none transition-all"
+              style={{ backgroundColor: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)" }}
+            />
+          </div>
+          <div>
+            <label className="block text-white/70 text-sm mb-2 font-medium">Что сломалось?</label>
+            <select
+              value={equipment}
+              onChange={e => setEquipment(e.target.value)}
+              className="w-full rounded-lg px-4 py-3 outline-none transition-all"
+              style={{ backgroundColor: "rgba(20,32,52,0.95)", border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.7)" }}
+            >
+              <option value="">Выберите технику</option>
+              <option>Стиральная машина</option>
+              <option>Холодильник</option>
+              <option>Посудомоечная машина</option>
+              <option>Духовой шкаф</option>
+              <option>Варочная панель</option>
+              <option>Вытяжка</option>
+            </select>
+          </div>
+          {error && <p className="text-red-400 text-sm">{error}</p>}
+          <button
+            onClick={handleSubmit}
+            disabled={loading}
+            className="w-full py-4 rounded-lg font-bold text-white text-lg mt-2 transition-colors cursor-pointer disabled:opacity-60"
+            style={{ backgroundColor: "var(--brand-red)" }}
+            onMouseEnter={e => { if (!loading) e.currentTarget.style.backgroundColor = "var(--brand-red-hover)"; }}
+            onMouseLeave={e => (e.currentTarget.style.backgroundColor = "var(--brand-red)")}
+          >
+            {loading ? "Отправляем..." : "Отправить заявку"}
+          </button>
+          <p className="text-white/30 text-xs text-center">Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности</p>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function Index() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -433,55 +542,7 @@ export default function Index() {
           </div>
 
           {/* CALL FORM */}
-          <div className="max-w-xl mx-auto rounded-2xl p-8 md:p-10" style={{ backgroundColor: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
-            <h3 className="font-heading text-2xl font-semibold text-white text-center mb-2">Оставить заявку</h3>
-            <p className="text-white/50 text-center text-sm mb-8">Мастер перезвонит в течение 15 минут</p>
-
-            <div className="space-y-4">
-              <div>
-                <label className="block text-white/70 text-sm mb-2 font-medium">Ваше имя</label>
-                <input
-                  type="text"
-                  placeholder="Иван Иванов"
-                  className="w-full rounded-lg px-4 py-3 text-white placeholder-white/30 outline-none transition-all"
-                  style={{ backgroundColor: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)" }}
-                />
-              </div>
-              <div>
-                <label className="block text-white/70 text-sm mb-2 font-medium">Телефон</label>
-                <input
-                  type="tel"
-                  placeholder="+7 (___) ___-__-__"
-                  className="w-full rounded-lg px-4 py-3 text-white placeholder-white/30 outline-none transition-all"
-                  style={{ backgroundColor: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)" }}
-                />
-              </div>
-              <div>
-                <label className="block text-white/70 text-sm mb-2 font-medium">Что сломалось?</label>
-                <select
-                  className="w-full rounded-lg px-4 py-3 outline-none transition-all"
-                  style={{ backgroundColor: "rgba(20,32,52,0.95)", border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.7)" }}
-                >
-                  <option value="">Выберите технику</option>
-                  <option>Стиральная машина</option>
-                  <option>Холодильник</option>
-                  <option>Посудомоечная машина</option>
-                  <option>Духовой шкаф</option>
-                  <option>Варочная панель</option>
-                  <option>Вытяжка</option>
-                </select>
-              </div>
-              <button
-                className="w-full py-4 rounded-lg font-bold text-white text-lg mt-2 transition-colors cursor-pointer"
-                style={{ backgroundColor: "var(--brand-red)" }}
-                onMouseEnter={e => (e.currentTarget.style.backgroundColor = "var(--brand-red-hover)")}
-                onMouseLeave={e => (e.currentTarget.style.backgroundColor = "var(--brand-red)")}
-              >
-                Отправить заявку
-              </button>
-              <p className="text-white/30 text-xs text-center">Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности</p>
-            </div>
-          </div>
+          <ContactForm />
         </div>
       </section>
 
