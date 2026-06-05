@@ -296,7 +296,7 @@ export default function Index() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
-              <a href="#contacts"
+              <a href="tel:+79307879192"
                 className="flex items-center justify-center gap-2 px-8 py-4 rounded text-white font-bold text-lg transition-colors"
                 style={{ backgroundColor: "var(--brand-red)" }}
                 onMouseEnter={e => (e.currentTarget.style.backgroundColor = "var(--brand-red-hover)")}
