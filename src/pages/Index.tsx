@@ -371,10 +371,7 @@ export default function Index() {
                 </div>
                 <h3 className="font-heading text-xl font-semibold mb-3" style={{ color: "var(--brand-dark)" }}>{service.title}</h3>
                 <p className="text-sm leading-relaxed" style={{ color: "var(--brand-muted)" }}>{service.desc}</p>
-                <div className="mt-6 flex items-center gap-2 text-sm font-semibold" style={{ color: "var(--brand-red)" }}>
-                  <span>Подробнее</span>
-                  <Icon name="ArrowRight" size={16} />
-                </div>
+
               </div>
             ))}
           </div>
